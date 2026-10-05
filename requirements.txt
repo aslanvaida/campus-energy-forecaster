@@ -5,5 +5,8 @@ scikit-learn==1.8.0
 xgboost==3.4.1
 matplotlib
 seaborn
+fastapi
+uvicorn
+python-multipart
 jupyter
 -e .

@@ -12,6 +12,7 @@ dependencies = ["numpy", "pandas", "scipy", "scikit-learn==1.8.0", "xgboost==3.4
 
 [project.optional-dependencies]
 external = ["kagglehub"]
+web = ["fastapi", "uvicorn", "python-multipart"]
 
 [tool.setuptools]
 packages = ["campus_energy_forecaster", "campus_energy_forecaster.modeling"]

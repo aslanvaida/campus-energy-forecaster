@@ -28,7 +28,7 @@ validation on ASHRAE and LBNL Building 59) is in the notebook.
 ├── reports
 │   └── figures
 ├── requirements.txt
-├── web                <- Next.js site: dataset upload + non-overlapping train/test splitter (see web/README.md)
+├── web                <- Next.js site: upload a dataset, split it, train + test the model, see results (see web/README.md)
 ├── scripts            <- The notebook as reproducible Python scripts, run in order
 │   ├── 01_eda.py                   <- EDA, missing-value study, train/test differences
 │   ├── 02_evaluate.py              <- CV model comparison, learning curve, error analysis, assumption checks
@@ -37,6 +37,7 @@ validation on ASHRAE and LBNL Building 59) is in the notebook.
 └── campus_energy_forecaster
     ├── __init__.py
     ├── config.py      <- Paths
+    ├── api.py         <- FastAPI service the web app uses to train and score the model
     ├── dataset.py     <- Load the datathon CSVs
     ├── evaluation.py  <- Metrics, test-like gap injection, cross-validation, baselines
     └── modeling
@@ -77,8 +78,12 @@ python -m campus_energy_forecaster.modeling.predict --input path/to/file.csv --o
 
 ### Web app
 
+The site trains and tests the final model on any labelled dataset you upload, using the train/test split you choose.
+It needs the model API and the Next.js app running together (two terminals):
+
 ```bash
-cd web && npm install && npm run dev   # http://localhost:3000
+make api   # model API on http://localhost:8000
+make web   # site on http://localhost:3000
 ```
 
 On macOS, XGBoost needs the OpenMP runtime (`brew install libomp`).

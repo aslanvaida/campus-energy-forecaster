@@ -1,6 +1,6 @@
 PYTHON ?= python
 
-.PHONY: requirements eda evaluate pipeline train predict clean
+.PHONY: requirements eda evaluate pipeline train predict api web clean
 
 requirements:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -19,6 +19,12 @@ train:
 
 predict:
 	$(PYTHON) -m campus_energy_forecaster.modeling.predict
+
+api:
+	$(PYTHON) -m uvicorn campus_energy_forecaster.api:app --port 8000
+
+web:
+	cd web && npm install && npm run dev
 
 clean:
 	find . -type f -name "*.py[co]" -delete
