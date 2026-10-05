@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "campus_energy_forecaster"
+version = "0.1.0"
+description = "Predicting campus building energy usage from usage history, weather, occupancy and building info (NTU Datathon 2026, Track 1)."
+authors = [{ name = "Aslan Shaukat Vaida" }]
+requires-python = ">=3.10"
+dependencies = ["numpy", "pandas", "scipy", "scikit-learn==1.8.0", "xgboost==3.4.1"]
+
+[tool.setuptools]
+packages = ["campus_energy_forecaster", "campus_energy_forecaster.modeling"]
