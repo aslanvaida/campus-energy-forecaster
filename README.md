@@ -28,6 +28,7 @@ validation on ASHRAE and LBNL Building 59) is in the notebook.
 ├── reports
 │   └── figures
 ├── requirements.txt
+├── web                <- Next.js site: dataset upload + non-overlapping train/test splitter (see web/README.md)
 ├── scripts            <- The notebook as reproducible Python scripts, run in order
 │   ├── 01_eda.py                   <- EDA, missing-value study, train/test differences
 │   ├── 02_evaluate.py              <- CV model comparison, learning curve, error analysis, assumption checks
@@ -72,6 +73,12 @@ To score any CSV with the same columns as the test file using a saved model:
 
 ```bash
 python -m campus_energy_forecaster.modeling.predict --input path/to/file.csv --output predictions.csv
+```
+
+### Web app
+
+```bash
+cd web && npm install && npm run dev   # http://localhost:3000
 ```
 
 On macOS, XGBoost needs the OpenMP runtime (`brew install libomp`).
