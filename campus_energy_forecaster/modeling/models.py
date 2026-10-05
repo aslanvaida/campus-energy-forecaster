@@ -228,9 +228,12 @@ class BaggedBlendModel(BaseEstimator):
         self.copies = copies
         self.drop_incomplete = drop_incomplete
 
-    def fit(self, df, y):
+    def fit(self, df, y, on_bag=None):
+        """on_bag(i, n_bags), if given, is called before each bag is fitted (used for progress reporting)."""
         self.bags_ = []
         for i in range(self.n_bags):
+            if on_bag is not None:
+                on_bag(i, self.n_bags)
             # Use seeds 100, 200, 300...
             model = BlendModel(ridge_weight=self.ridge_weight, copies=self.copies,
                                drop_incomplete=self.drop_incomplete, aug_seed=100 + (i * 100))

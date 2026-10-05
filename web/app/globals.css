@@ -78,6 +78,8 @@
   --test: oklch(0.62 0.13 235);
   --test-foreground: oklch(0.98 0.01 235);
   --ok: oklch(0.6 0.15 150);
+  --series-1: #2a78d6;
+  --card-solid: oklch(1 0 0);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -94,6 +96,8 @@
   --test: oklch(0.7 0.12 230);
   --test-foreground: oklch(0.16 0.03 230);
   --ok: oklch(0.75 0.16 150);
+  --series-1: #3987e5;
+  --card-solid: oklch(0.19 0.008 265);
   --background: oklch(0.145 0.005 265);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.19 0.008 265 / 85%);
