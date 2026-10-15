@@ -1,6 +1,6 @@
 PYTHON ?= python
 
-.PHONY: requirements eda evaluate pipeline train predict api web clean
+.PHONY: requirements eda evaluate pipeline train predict test api web clean
 
 requirements:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -19,6 +19,9 @@ train:
 
 predict:
 	$(PYTHON) -m campus_energy_forecaster.modeling.predict
+
+test:
+	$(PYTHON) -m pytest -q
 
 api:
 	$(PYTHON) -m uvicorn campus_energy_forecaster.api:app --port 8000
