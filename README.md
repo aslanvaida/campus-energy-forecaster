@@ -29,6 +29,7 @@ validation on ASHRAE and LBNL Building 59) is in the notebook.
 │   └── figures
 ├── requirements.txt
 ├── web                <- Next.js site: upload a dataset, split it, train + test the model, see results (see web/README.md)
+├── tests              <- pytest suite on synthetic data (`make test`)
 ├── scripts            <- The notebook as reproducible Python scripts, run in order
 │   ├── 01_eda.py                   <- EDA, missing-value study, train/test differences
 │   ├── 02_evaluate.py              <- CV model comparison, learning curve, error analysis, assumption checks
@@ -74,6 +75,17 @@ To score any CSV with the same columns as the test file using a saved model:
 
 ```bash
 python -m campus_energy_forecaster.modeling.predict --input path/to/file.csv --output predictions.csv
+```
+
+### Tests
+
+The tests use small synthetic data (no datathon CSVs needed) and cover the metrics, gap injection, imputation, feature
+engineering, the blend and bagged models, data loading and the train-then-predict round trip. They also run on every push via
+GitHub Actions.
+
+```bash
+pip install pytest
+make test        # or: python -m pytest -q
 ```
 
 ### Web app
