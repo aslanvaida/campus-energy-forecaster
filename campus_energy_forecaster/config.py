@@ -13,9 +13,10 @@ RESULTS_JSON = WEB_DATA_DIR / "results.json"
 @dataclass(frozen=True)
 class Assumptions:
     """Change these to match a real site; every figure in the dashboard is computed from them."""
-    # US average commercial electricity price in 2025, 13.41 cents/kWh (EIA Electric Power Monthly, Table 5.3).
-    # Replace with the site's own tariff.
-    tariff_usd_per_kwh: float = 0.1341
-    # US average grid CO2 emission rate, 767.2 lb/MWh = 0.348 kg/kWh (EPA eGRID2023, total output rate).
-    # Replace with the local grid factor.
-    carbon_kg_per_kwh: float = 0.348
+    # California commercial electricity price, 2025: 26.16 cents/kWh (EIA-861 final annual data, "Historical State Data",
+    # Total Electric Industry). For reference the US commercial average is 13.37 cents/kWh. The demo building is in
+    # Berkeley, California. Replace with the site's own tariff.
+    tariff_usd_per_kwh: float = 0.2616
+    # CAMX (WECC California) grid CO2 total output emission rate, 428.464 lb/MWh = 0.194 kg/kWh (EPA eGRID2023 Revision 2).
+    # For reference the US average is 767.209 lb/MWh = 0.348 kg/kWh. Replace with the local grid factor.
+    carbon_kg_per_kwh: float = 0.194

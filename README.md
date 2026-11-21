@@ -1,10 +1,12 @@
 # Campus Energy Forecaster
 
-A building energy forecasting and efficiency tool. From hourly meter data it forecasts each load a day ahead with an
-uncertainty band, flags hours where a load runs above what conditions explain (and prices the waste in energy, money and
-CO2), and plans for a grid outage: how long a backup battery lasts and which loads to keep running to make it last longest.
+A building energy forecasting and efficiency tool for schools, clinics and other community buildings. From hourly meter
+data it forecasts each load a day ahead with an uncertainty band, flags hours where a load runs above what conditions
+explain (and prices the waste in energy, money and CO2), and plans for a grid outage: how long a backup battery keeps
+the building running and which loads to keep on to make it last longest.
 
-It targets the Sustainable Energy theme, mainly **usage and efficiency**, with **emergency power** as the second feature.
+It targets the Sustainable Energy theme: mainly **usage and efficiency**, with **emergency power for communities when the
+grid goes down** as the second feature.
 
 ## What it does
 
@@ -27,13 +29,13 @@ Demo building: LBNL Building 59 (Berkeley, CA office building), 2018-01 to 2020-
 
 **What the building uses**
 
-- Electricity (HVAC, lighting, plug loads): 401 MWh, about $53,807 and 140 t CO2 at the assumed price and grid factor (peak 164 kW).
+- Electricity (HVAC, lighting, plug loads): 401 MWh, about $104,967 and 78 t CO2 at the assumed price and grid factor (peak 164 kW).
 - 54% of it is used after hours (nights, weekends, holidays), which are 66% of the hours. Overnight plug load is 39% of the midday level.
-- What-if (arithmetic on measured loads): cutting after-hours HVAC and plug load by 10% would save 21,307 kWh ($2,857, 7.4 t CO2), 20% would save 42,614 kWh ($5,715, 14.8 t CO2), 30% would save 63,921 kWh ($8,572, 22.2 t CO2) a year.
+- What-if (arithmetic on measured loads): cutting after-hours HVAC and plug load by 10% would save 21,307 kWh ($5,574, 4.1 t CO2), 20% would save 42,614 kWh ($11,148, 8.3 t CO2), 30% would save 63,921 kWh ($16,722, 12.4 t CO2) a year.
 
 **Waste detection**
 
-- 96 events flagged in 365 days: 3,361 kWh above expected (at least 1,179 kWh beyond the alert threshold), $451, 1,170 kg CO2 if every one were fixed. These are estimates for flagged hours, not confirmed savings.
+- 96 events flagged in 365 days: 3,361 kWh above expected (at least 1,179 kWh beyond the alert threshold), $879, 652 kg CO2 if every one were fixed. These are estimates for flagged hours, not confirmed savings.
 - Test on injected faults (there are no labelled faults in public data). Share of 20 injected 6-48 hour faults found, by size of the extra load as a share of the load's median:
 
 | Load | small (+25-40%) | medium (+50-75%) | large (+100-150%) | alerts per 30 days on real data |
@@ -59,7 +61,7 @@ In 2020 the plug and lighting loads dropped sharply (plug averaged 3.2 kW agains
 - Backup runtime forecast versus the runtime the building's actual load would have given, for 265 outages starting on weekday 9 am and Saturday 10 pm in 2019 (48 more skipped for missing meter readings; 250 kWh battery, all loads on): mean actual runtime 4.1 h, mean absolute error 1.3 h (29%).
 - Example, winter weekday, 9 am, 250 kWh battery: everything on lasts 2.4 h; keeping lighting only lasts 103.2 h; keeping lighting and plug loads lasts 7.0 h.
 
-**Assumptions** (editable in `campus_energy_forecaster/config.py`): electricity $0.1341/kWh (US average commercial price 2025, EIA Electric Power Monthly Table 5.3); grid 0.348 kg CO2/kWh (US average grid CO2 rate, EPA eGRID2023 (767.2 lb/MWh)); battery 90% usable, 92% efficient.
+**Assumptions** (editable in `campus_energy_forecaster/config.py`): electricity $0.2616/kWh (California commercial price 2025, EIA-861 final annual data (US average: 13.37 cents/kWh)); grid 0.194 kg CO2/kWh (CAMX grid CO2 total output rate, EPA eGRID2023 Rev. 2 (428.5 lb/MWh; US average 0.348 kg/kWh)); battery 90% usable, 92% efficient.
 <!-- RESULTS:END -->
 
 ## Getting started
@@ -72,6 +74,7 @@ python scripts/compute_predictions.py                 # walk-forward predictions
 make analysis                                         # writes web/public/data/results.json
 python scripts/render_readme.py                       # fills the Results block above from that file
 make web                                              # dashboard on http://localhost:3000
+pip install reportlab matplotlib && python scripts/build_proposal.py   # two-page proposal PDF in proposal/
 ```
 
 `web/public/data/results.json` is committed, so the dashboard runs without downloading anything:
@@ -116,7 +119,7 @@ make test        # or: python -m pytest -q
 - The weather used in the day-ahead forecast is the recorded weather, standing in for a weather forecast.
 - Flagged energy is "above expected", not a confirmed saving. A person has to find the cause.
 - After a sharp change in how a building is used (see 2020 above), the models need a refit on recent data.
-- The price and grid factor are US averages. Replace them in `config.py` for a real site.
+- The price and grid factor are California values, matching the demo building (US averages are in `config.py` comments). Replace them for a real site.
 - The meter data was gap-filled by the dataset authors, and about 7% of 2019 hours still have a missing reading; those hours are skipped.
 
 ## Project layout
@@ -129,7 +132,8 @@ campus_energy_forecaster/
   waste.py       alert events, energy / cost / CO2
   outage.py      backup battery runtime and load-set ranking
   evaluation.py  metrics, seasonal-naive baseline, fault injection benchmark
-scripts/         download_data, compute_predictions, run_analysis, render_readme
+scripts/         download_data, compute_predictions, run_analysis, render_readme, build_proposal
+proposal/        project proposal PDF (generated from results.json)
 tests/           pytest suite on synthetic data
 web/             Next.js dashboard (reads web/public/data/results.json)
 ```
