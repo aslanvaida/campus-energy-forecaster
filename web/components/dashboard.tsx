@@ -6,6 +6,7 @@ import { BandChart } from "@/components/band-chart";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { UploadAnalysis } from "@/components/upload-analysis";
 import { multi } from "@/lib/multibuilding";
 import { LOAD_LABEL, fmt, hoursText, results as R, usd, when } from "@/lib/results";
 
@@ -76,6 +77,7 @@ export function Dashboard() {
       <Peaks />
       <Outage />
       <Scale />
+      <UploadAnalysis />
       <Honesty />
     </div>
   );
