@@ -2,38 +2,19 @@ import numpy as np
 import pandas as pd
 import pytest
 
-DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
-
-def make_frame(n=360, seed=0):
-    """Small synthetic frame with the same columns as the datathon CSV."""
+def make_hourly(days=120, seed=0):
+    """Synthetic office-like hourly frame: weekday daytime load driven by occupancy and temperature."""
     r = np.random.RandomState(seed)
-    df = pd.DataFrame({
-        "id": np.arange(n),
-        "building_id": r.choice(["B1", "B2", "B3"], n),
-        "building_type": "office",
-        "day_of_week": r.choice(DAYS, n),
-        "hour": r.randint(0, 24, n),
-        "month": r.randint(1, 13, n),
-        "temperature": r.normal(25, 5, n),
-        "humidity": r.uniform(40, 90, n),
-        "occupancy": r.uniform(0, 100, n),
-        "previous_usage": r.uniform(50, 150, n),
-    })
-    df.loc[df.building_id == "B3", "building_type"] = "lab"
-    df["energy_usage"] = 0.8 * df.previous_usage + 0.3 * df.occupancy + r.normal(0, 2, n)
-    return df
+    idx = pd.date_range("2022-01-03", periods=24 * days, freq="h")
+    hour, wd = idx.hour.values, idx.dayofweek.values < 5
+    occ = np.where(wd & (hour >= 8) & (hour < 18), 40, 0) * r.uniform(0.7, 1.1, len(idx))
+    temp = 15 + 8 * np.sin(2 * np.pi * (idx.dayofyear.values - 100) / 365) + 4 * np.sin(2 * np.pi * (hour - 9) / 24) + r.normal(0, 1, len(idx))
+    load = 20 + 0.5 * occ + 0.8 * np.clip(temp - 18, 0, None) + r.normal(0, 0.8, len(idx))
+    return pd.DataFrame({"hvac": load, "temp": temp, "rh": 60.0, "solar": np.clip(np.sin(2 * np.pi * (hour - 6) / 24), 0, None) * 500,
+                         "occupancy": occ}, index=idx)
 
 
 @pytest.fixture
-def frame():
-    return make_frame()
-
-
-@pytest.fixture
-def frame_with_gaps():
-    df = make_frame(seed=1)
-    r = np.random.RandomState(5)
-    for c in ["temperature", "humidity", "occupancy", "previous_usage"]:
-        df.loc[r.rand(len(df)) < 0.1, c] = np.nan
-    return df
+def hourly():
+    return make_hourly()
