@@ -19,14 +19,6 @@ export default function Home() {
             carbon figure on it, and shows how long critical loads can keep running on backup power when the grid goes down. It
             runs on hourly meter data that most facilities already have.
           </p>
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <a href="#upload" className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow transition-opacity hover:opacity-90">
-              Analyze your own meter data
-            </a>
-            <a href="#demo" className="rounded-lg border bg-background/60 px-5 py-2.5 text-sm font-medium backdrop-blur hover:bg-muted">
-              See the demo building
-            </a>
-          </div>
           <p className="mt-3 text-sm text-muted-foreground">
             Demo data: {results.dataset.name}, a real office building, {results.dataset.period}. Public data, licence {results.dataset.license}.
             Your own file is analysed in your browser and never uploaded.
