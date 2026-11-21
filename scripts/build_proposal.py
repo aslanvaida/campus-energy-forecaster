@@ -138,7 +138,8 @@ def build():
         P("Campus Energy Forecaster", title),
         P("Cutting wasted electricity and planning for grid outages in schools, clinics and community buildings", sub),
         P("<b>Global Sustainability Challenge 2026-27</b> &middot; Theme: Sustainable Energy &middot; Focus: Usage and Efficiency; "
-          "emergency power for communities when the grid goes down &middot; Team: Aslan Shaukat Vaida, Ramith Vaid", small),
+          "emergency power for communities when the grid goes down", small),
+        P("<b>Team Terra Nexus:</b> Aslan Shaukat Vaida, Ramith Vaid, Soham Bisaria, Rohit Menon, Panav Java", small),
         Spacer(1, 3),
         P("1. The problem", h),
         P(f"Meter data is widely collected but rarely turned into decisions: it is hard to tell an unusual hour from a normal one, "
@@ -216,7 +217,7 @@ def build():
     ]
     OUT.parent.mkdir(parents=True, exist_ok=True)
     doc = SimpleDocTemplate(str(OUT), pagesize=A4, leftMargin=16 * mm, rightMargin=16 * mm, topMargin=13 * mm, bottomMargin=12 * mm,
-                            title="Campus Energy Forecaster: project proposal", author="Aslan Shaukat Vaida, Ramith Vaid",
+                            title="Campus Energy Forecaster: project proposal", author="Terra Nexus: Aslan Shaukat Vaida, Ramith Vaid, Soham Bisaria, Rohit Menon, Panav Java",
                             subject="Global Sustainability Challenge 2026-27, Sustainable Energy")
     doc.build(story)
     print("wrote", OUT)
