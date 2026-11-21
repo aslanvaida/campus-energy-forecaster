@@ -1,64 +1,102 @@
-"""Validation helpers: metrics, test-like gap injection, K-fold CV and the baseline models."""
+"""Honest evaluation: forecast accuracy against a seasonal-naive baseline, band coverage, and waste-detector
+precision / recall on synthetically injected faults (there are no real fault labels in public data)."""
 import numpy as np
-from sklearn.base import BaseEstimator
-from sklearn.compose import ColumnTransformer, make_column_selector
-from sklearn.impute import SimpleImputer
-from sklearn.linear_model import RidgeCV
-from sklearn.model_selection import KFold
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
+import pandas as pd
 
-from campus_energy_forecaster.modeling.models import CAT, FE, NUMC, _xgb
-
-SEED = 42
+from campus_energy_forecaster.config import Assumptions
+from campus_energy_forecaster.waste import detect_waste
 
 
-def rmse(a, b):
-    return float(np.sqrt(np.mean((np.asarray(a) - np.asarray(b)) ** 2)))
+def mae(y, p):
+    y, p = np.asarray(y, float), np.asarray(p, float)
+    return float(np.mean(np.abs(y - p)))
 
 
-def r2(y, p):
-    return float(1 - np.sum((y - p) ** 2) / np.sum((y - y.mean()) ** 2))
+def rmse(y, p):
+    y, p = np.asarray(y, float), np.asarray(p, float)
+    return float(np.sqrt(np.mean((y - p) ** 2)))
 
 
-def gap_pattern(test):
-    """Share of test rows with 0..4 missing numeric values."""
-    return test[NUMC].isna().sum(axis=1).value_counts(normalize=True).reindex(range(5), fill_value=0).values
+def cv_rmse(y, p):
+    """Coefficient of variation of RMSE (%), the usual building-energy accuracy measure (ASHRAE Guideline 14)."""
+    return 100 * rmse(y, p) / float(np.mean(y))
 
 
-def add_testlike_gaps(df, k_dist, seed):
-    """Blank out values so the number of gaps per row follows the test set's pattern (columns chosen at random)."""
-    d = df.copy(); r = np.random.RandomState(seed)
-    k = r.choice(5, size=len(d), p=k_dist)
-    mask = r.rand(len(d), 4).argsort(axis=1).argsort(axis=1) < k[:, None]
-    for j, c in enumerate(NUMC):
-        d.loc[mask[:, j], c] = np.nan
-    return d
+def nmbe(y, p):
+    """Normalised mean bias error (%): positive means the model under-predicts."""
+    y, p = np.asarray(y, float), np.asarray(p, float)
+    return 100 * float(np.sum(y - p) / (len(y) * np.mean(y)))
 
 
-def cross_validate(make, name, train, y, k_dist):
-    """5-fold shuffled CV. Scores each fold as is (complete rows) and with test-like gaps added."""
-    clean, gaps = np.zeros(len(train)), np.zeros(len(train))
-    for a, b in KFold(5, shuffle=True, random_state=SEED).split(train):
-        m = make().fit(train.iloc[a], y[a]); v = train.iloc[b]
-        clean[b] = m.predict(v); gaps[b] = m.predict(add_testlike_gaps(v, k_dist, 11))
-    row = {'model': name, 'RMSE (complete rows)': rmse(y, clean), 'MAE (complete rows)': float(np.mean(np.abs(y - clean))),
-           'R2 (complete rows)': r2(y, clean), 'RMSE (test-like gaps)': rmse(y, gaps)}
-    return row, clean, gaps
+def seasonal_naive(series: pd.Series, lag_hours: int = 168) -> pd.Series:
+    """Same hour last week."""
+    return series.shift(lag_hours)
 
 
-class Naive(BaseEstimator):
-    """usage = previous usage (median-filled when missing)."""
-    def fit(self, df, y):
-        self.med_ = df.previous_usage.median(); return self
+def score_forecast(y: pd.Series, pred: pd.DataFrame, naive: pd.Series) -> dict:
+    ok = y.notna() & pred["mid"].notna() & naive.notna()
+    y, pred, naive = y[ok], pred[ok], naive[ok]
+    inside = ((y >= pred["lo"]) & (y <= pred["hi"])).mean()
+    return {"n_hours": int(ok.sum()), "mae_kw": round(mae(y, pred["mid"]), 3), "rmse_kw": round(rmse(y, pred["mid"]), 3),
+            "cv_rmse_pct": round(cv_rmse(y, pred["mid"]), 2), "nmbe_pct": round(nmbe(y, pred["mid"]), 2),
+            "naive_mae_kw": round(mae(y, naive), 3), "naive_cv_rmse_pct": round(cv_rmse(y, naive), 2),
+            "mae_gain_vs_naive_pct": round(100 * (1 - mae(y, pred["mid"]) / mae(y, naive)), 1),
+            "band_coverage_pct": round(100 * float(inside), 1), "band_nominal_pct": 80.0}
 
-    def predict(self, df):
-        return df.previous_usage.fillna(self.med_).values
+
+def inject_faults(actual: pd.Series, n_faults: int, seed: int = 0, extra_share=(0.25, 0.6), duration_hours=(6, 48),
+                  min_gap_hours: int = 24 * 3) -> tuple[pd.Series, pd.DataFrame]:
+    """Add a sustained extra load to ``n_faults`` random, non-overlapping windows.
+    The extra load is a share of the typical (median) load, so it is realistic in scale. Returns the modified series
+    and a table of the injected windows."""
+    rng = np.random.RandomState(seed)
+    out = actual.copy()
+    typical = float(actual.median())
+    n = len(actual)
+    taken, rows = [], []
+    tries = 0
+    while len(rows) < n_faults and tries < 1000:
+        tries += 1
+        dur = int(rng.randint(duration_hours[0], duration_hours[1] + 1))
+        s = int(rng.randint(24, n - dur - 24))
+        if any(s < e + min_gap_hours and s + dur + min_gap_hours > b for b, e in taken):
+            continue
+        extra = typical * rng.uniform(*extra_share)
+        out.iloc[s:s + dur] += extra
+        taken.append((s, s + dur))
+        rows.append({"start": actual.index[s], "end": actual.index[s + dur - 1], "hours": dur,
+                     "extra_kw": extra, "extra_kwh": extra * dur})
+    return out, pd.DataFrame(rows)
 
 
-def global_model(kind):
-    """One Ridge or XGBoost model for all buildings, median imputation, no tuning."""
-    num = Pipeline([('i', SimpleImputer(strategy='median', keep_empty_features=True))] + ([('s', StandardScaler())] if kind == 'ridge' else []))
-    est = RidgeCV(alphas=np.logspace(-2, 3, 20)) if kind == 'ridge' else _xgb(n_estimators=400, learning_rate=0.03, max_depth=4)
-    return Pipeline([('fe', FE()), ('pre', ColumnTransformer([('c', OneHotEncoder(handle_unknown='ignore'), CAT),
-                                                              ('n', num, make_column_selector(dtype_include='number'))])), ('m', est)])
+FAULT_SIZES = {"small": (0.25, 0.4), "medium": (0.5, 0.75), "large": (1.0, 1.5)}   # extra load as a share of the median load
+
+
+def _overlap(s, e, a, b):
+    return s <= b and a <= e
+
+
+def score_detection(events, injected: pd.DataFrame) -> dict:
+    """Event-level recall of the injected faults, and the share of the injected kWh that flagged events account for."""
+    if injected.empty:
+        return {}
+    ev = [(pd.Timestamp(e.start), pd.Timestamp(e.end), e.excess_kwh) for e in events]
+    found = [any(_overlap(r.start, r.end, s, e) for s, e, _ in ev) for r in injected.itertuples()]
+    kwh = sum(k for s, e, k in ev if any(_overlap(r.start, r.end, s, e) for r in injected.itertuples()))
+    return {"injected_faults": int(len(injected)), "recall_pct": round(100 * float(np.mean(found)), 1),
+            "flagged_kwh_over_injected_kwh_pct": round(100 * kwh / float(injected["extra_kwh"].sum()), 1)}
+
+
+def run_detection_benchmark(meter: str, actual: pd.Series, band: pd.DataFrame, n_faults=20, seed=0,
+                            assumptions: Assumptions = Assumptions(), **detect_kw) -> dict:
+    """Inject synthetic faults of three sizes into held-out actuals and see how many the detector finds.
+    ``flagged_events_per_30d`` counts events on the unmodified data: they are unlabelled (they may be real faults or
+    regime changes) and are the practical alert rate."""
+    clean = detect_waste(meter, actual, band, assumptions=assumptions, **detect_kw)
+    out = {"flagged_events_per_30d": round(len(clean) * 30 / (len(actual) / 24), 2), "by_size": []}
+    for name, share in FAULT_SIZES.items():
+        faulty, inj = inject_faults(actual, n_faults, seed, extra_share=share)
+        events = detect_waste(meter, faulty, band, assumptions=assumptions, **detect_kw)
+        out["by_size"].append({"size": name, "extra_load_pct_of_median": [int(100 * share[0]), int(100 * share[1])],
+                               **score_detection(events, inj)})
+    return out
