@@ -213,7 +213,7 @@ function Outage() {
   const maxKw = Math.max(...prof.map((p) => p.hvac + p.lighting + p.plug));
   const gain = all.runtime_h > 0 ? best.runtime_h / all.runtime_h : 0;
   return (
-    <Section id="outage" title="Emergency power planner" lead="If the grid fails, how long does a backup battery last, and which loads should stay on to make it last longest? Runtimes use the forecast load for that moment (day-ahead forecast for the first 24 hours, a baseline model after that), and each is checked against what the building actually drew. Windows are chosen where the meter readings are complete.">
+    <Section id="outage" title="Emergency power planner" lead="When the grid goes down, how long does a backup battery keep a building running, and which loads should stay on to make it last longest? Runtimes use the forecast load for that moment (day-ahead forecast for the first 24 hours, a baseline model after that), and each is checked against what the building actually drew. Windows are chosen where the meter readings are complete.">
       <Card>
         <CardHeader className="gap-3">
           <Pills label="Outage starts" value={sc} onChange={setSc} items={O.scenarios.map((s, i) => ({ id: i, text: s.label }))} />

@@ -198,8 +198,8 @@ def main():
                     "citation": "Luo, N., Wang, Z., Blum, D., et al. (2022). A three-year dataset supporting research on building "
                                 "energy, HVAC controls, and occupancy analytics. Scientific Data."},
         "assumptions": {"tariff_usd_per_kwh": A.tariff_usd_per_kwh, "carbon_kg_per_kwh": A.carbon_kg_per_kwh,
-                        "tariff_source": "US average commercial price 2025, EIA Electric Power Monthly Table 5.3",
-                        "carbon_source": "US average grid CO2 rate, EPA eGRID2023 (767.2 lb/MWh)"},
+                        "tariff_source": "California commercial price 2025, EIA-861 final annual data (US average: 13.37 cents/kWh)",
+                        "carbon_source": "CAMX grid CO2 total output rate, EPA eGRID2023 Rev. 2 (428.5 lb/MWh; US average 0.348 kg/kWh)"},
         "overview": overview_section(df),
         "forecast": forecast_metrics(df),
         "waste": waste_section(df),
