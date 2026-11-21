@@ -2,8 +2,6 @@
 data/**
 !data/**/
 !data/**/.gitkeep
-models/*
-!models/.gitkeep
 *.pkl
 
 # Python

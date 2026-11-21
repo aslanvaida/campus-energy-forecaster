@@ -1,34 +1,18 @@
 PYTHON ?= python
 
-.PHONY: requirements eda evaluate pipeline train predict test api web clean
+.PHONY: requirements data analysis test web clean
 
 requirements:
-	$(PYTHON) -m pip install -r requirements.txt
+	$(PYTHON) -m pip install -r requirements.txt pytest
 
-eda:
-	$(PYTHON) scripts/01_eda.py
+data:
+	$(PYTHON) scripts/download_data.py
 
-evaluate:
-	$(PYTHON) scripts/02_evaluate.py
-
-pipeline: eda evaluate
-	$(PYTHON) scripts/03_train_and_predict.py
-
-train:
-	$(PYTHON) -m campus_energy_forecaster.modeling.train
-
-predict:
-	$(PYTHON) -m campus_energy_forecaster.modeling.predict
+analysis:
+	$(PYTHON) scripts/run_analysis.py
 
 test:
 	$(PYTHON) -m pytest -q
 
-api:
-	$(PYTHON) -m uvicorn campus_energy_forecaster.api:app --port 8000
-
 web:
 	cd web && npm install && npm run dev
-
-clean:
-	find . -type f -name "*.py[co]" -delete
-	find . -type d -name "__pycache__" -delete

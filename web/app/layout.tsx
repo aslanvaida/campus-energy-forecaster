@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Campus Energy Forecaster",
-  description: "Upload a dataset and split it into non-overlapping training and test sets.",
+  description: "Building energy forecasting and efficiency tool: waste alerts, next-day load forecasts with uncertainty, and emergency power planning.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
