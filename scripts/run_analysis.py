@@ -17,6 +17,7 @@ from campus_energy_forecaster.config import DATA_DIR, RESULTS_JSON, Assumptions
 from campus_energy_forecaster.data import LOAD_COLUMNS, load_building
 from campus_energy_forecaster.evaluation import run_detection_benchmark, score_forecast, seasonal_naive
 from campus_energy_forecaster.forecast import calendar_features
+from campus_energy_forecaster.peak import peak_forecast_accuracy, peak_shift_estimate
 from campus_energy_forecaster.outage import Backup, rank_load_sets, runtime_hours, splice_forecast
 from campus_energy_forecaster.waste import detect_waste, summarise
 
@@ -139,7 +140,7 @@ def outage_section(df):
         sc = {"key": key, "label": label, "start": str(start), "batteries": []}
         for cap in BATTERIES_KWH:
             bk = Backup(capacity_kwh=cap)
-            rows = rank_load_sets(mid, start, bk, must_keep=("lighting",))
+            rows = rank_load_sets(mid, start, bk, must_keep=())
             for row in rows:  # check against actual consumption and add the uncertainty range
                 keep = row["keep"]
                 row["actual_runtime_h"] = runtime_hours(sum(act[t] for t in keep), start, bk)
@@ -165,8 +166,29 @@ def outage_section(df):
     acc = {"battery_kwh": 250, "n_starts": int(len(e)), "n_skipped_missing_data": skipped, "mean_actual_runtime_h": r(e[:, 1].mean()),
            "mae_h": r(np.abs(e[:, 0] - e[:, 1]).mean()), "mape_pct": r(100 * np.mean(np.abs(e[:, 0] - e[:, 1]) / e[:, 1])),
            "bias_h": r((e[:, 0] - e[:, 1]).mean())}
-    return {"scenarios": scenarios, "accuracy": acc, "batteries_kwh": BATTERIES_KWH, "must_keep": ["lighting"],
+    return {"scenarios": scenarios, "accuracy": acc, "batteries_kwh": BATTERIES_KWH, "default_must_keep": ["lighting"],
             "backup_assumptions": {"usable_fraction": Backup(1).usable_fraction, "efficiency": Backup(1).efficiency}}
+
+
+def peak_section(df):
+    """Day-ahead peak forecast, and what shifting flexible HVAC load out of forecast peak hours would do to the real peak."""
+    a, b = YEARS["2019"]
+    tot_fc = load_pred("total", "forecast")["mid"].loc[a:b]
+    acc = peak_forecast_accuracy(df["total"].loc[a:b], tot_fc)
+    shifts = [peak_shift_estimate(df["total"].loc[a:b], df["hvac"].loc[a:b], tot_fc, share) for share in (0.1, 0.2, 0.3)]
+    pk = daily_peaks_table(df["total"].loc[a:b], tot_fc)
+    return {"accuracy": {k: r(v, 1) if isinstance(v, float) else v for k, v in acc.items()},
+            "shift": [{k: (r(v, 1) if isinstance(v, float) else v) for k, v in x.items()} for x in shifts],
+            "next_days": pk}
+
+
+def daily_peaks_table(actual, forecast):
+    """The ten days with the highest forecast peak, with what actually happened (for the alert list)."""
+    from campus_energy_forecaster.peak import daily_peaks
+    f, a = daily_peaks(forecast), daily_peaks(actual)
+    top = f["kw"].dropna().nlargest(10).index.sort_values()
+    return [{"date": str(d.date()), "forecast_kw": r(f.loc[d, "kw"]), "forecast_hour": int(f.loc[d, "hour"]),
+             "actual_kw": r(a.loc[d, "kw"]), "actual_hour": None if pd.isna(a.loc[d, "hour"]) else int(a.loc[d, "hour"])} for d in top]
 
 
 def series_section(df):
@@ -198,13 +220,14 @@ def main():
                     "citation": "Luo, N., Wang, Z., Blum, D., et al. (2022). A three-year dataset supporting research on building "
                                 "energy, HVAC controls, and occupancy analytics. Scientific Data."},
         "assumptions": {"tariff_usd_per_kwh": A.tariff_usd_per_kwh, "carbon_kg_per_kwh": A.carbon_kg_per_kwh,
-                        "tariff_source": "US average commercial price 2025, EIA Electric Power Monthly Table 5.3",
-                        "carbon_source": "US average grid CO2 rate, EPA eGRID2023 (767.2 lb/MWh)"},
+                        "tariff_source": "California commercial price 2025, EIA-861 final annual data (US average: 13.37 cents/kWh)",
+                        "carbon_source": "CAMX grid CO2 total output rate, EPA eGRID2023 Rev. 2 (428.5 lb/MWh; US average 0.348 kg/kWh)"},
         "overview": overview_section(df),
         "forecast": forecast_metrics(df),
         "waste": waste_section(df),
         "after_hours": after_hours_section(df),
         "outage": outage_section(df),
+        "peak": peak_section(df),
         "series": series_section(df),
     }
     RESULTS_JSON.parent.mkdir(parents=True, exist_ok=True)

@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Campus Energy Forecaster",
-  description: "Building energy forecasting and efficiency tool: waste alerts, next-day load forecasts with uncertainty, and emergency power planning.",
+  description: "Cut wasted electricity and plan for grid outages in community buildings: waste alerts, next-day load forecasts with uncertainty, and backup-power planning.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
