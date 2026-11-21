@@ -6,15 +6,15 @@ import { results } from "@/lib/results";
 export default function Home() {
   return (
     <main className="flex flex-1 flex-col">
-      <header className="relative isolate flex min-h-[380px] items-end overflow-hidden border-b sm:min-h-[460px]">
+      <header className="relative isolate flex min-h-[320px] items-end overflow-hidden border-b sm:min-h-[460px]">
         <div className="absolute inset-0 -z-10">
           <HeroVortex />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
         </div>
-        <div className="mx-auto w-full max-w-6xl px-4 pt-24 pb-10 sm:px-6">
-          <Badge variant="secondary">Sustainable Energy · Usage and Efficiency · Emergency power for communities</Badge>
+        <div className="mx-auto w-full max-w-6xl px-4 pt-16 pb-8 sm:px-6 sm:pt-24 sm:pb-10">
+          <Badge variant="secondary" className="h-auto py-1 text-left whitespace-normal">Sustainable Energy · Usage and Efficiency · Emergency power for communities</Badge>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-5xl">Campus Energy Forecaster</h1>
-          <p className="mt-3 max-w-3xl text-lg text-muted-foreground text-pretty">
+          <p className="mt-3 max-w-3xl text-base text-muted-foreground text-pretty sm:text-lg">
             A decision tool for schools, clinics and community buildings: it finds the electricity a building wastes, puts a cost and a
             carbon figure on it, and shows how long critical loads can keep running on backup power when the grid goes down. It
             runs on hourly meter data that most facilities already have.

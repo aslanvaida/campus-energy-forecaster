@@ -34,15 +34,15 @@ export function AppShell() {
       role="tab"
       aria-selected={view === v}
       onClick={() => select(v)}
-      className={`flex flex-1 flex-col items-start rounded-lg border px-4 py-2 text-left transition-colors sm:flex-none sm:min-w-64 ${
+      className={`flex min-h-12 flex-1 flex-col items-start rounded-lg border px-3 py-2 sm:px-4 text-left transition-colors sm:flex-none sm:min-w-64 ${
         view === v ? "border-primary bg-primary text-primary-foreground" : "hover:bg-muted"
       }`}
     >
       <span className="flex items-center gap-2 text-sm font-semibold">
         {label}
-        {badge && <span className={`rounded-full px-2 py-0.5 text-[10px] uppercase ${view === v ? "bg-primary-foreground/20" : "bg-primary text-primary-foreground"}`}>{badge}</span>}
+        {badge && <span className={`shrink-0 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] uppercase ${view === v ? "bg-primary-foreground/20" : "bg-primary text-primary-foreground"}`}>{badge}</span>}
       </span>
-      <span className={`text-xs ${view === v ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{sub}</span>
+      <span className={`hidden text-xs sm:block ${view === v ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{sub}</span>
     </button>
   );
 

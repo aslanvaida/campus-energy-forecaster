@@ -42,7 +42,7 @@ function Pills<T extends string | number>({ items, value, onChange, label }: { i
           type="button"
           aria-pressed={it.id === value}
           onClick={() => onChange(it.id)}
-          className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+          className={`min-h-10 rounded-full border px-3.5 py-1 text-sm transition-colors sm:min-h-0 sm:px-3 ${
             it.id === value ? "border-primary bg-primary text-primary-foreground" : "hover:bg-muted"
           }`}
         >
@@ -93,10 +93,10 @@ function Alerts() {
                 <TableHead>Load</TableHead>
                 <TableHead>Started</TableHead>
                 <TableHead className="text-right">Duration</TableHead>
-                <TableHead className="text-right">Extra load</TableHead>
+                <TableHead className="hidden text-right sm:table-cell">Extra load</TableHead>
                 <TableHead className="text-right">Wasted energy</TableHead>
                 <TableHead className="text-right">Cost</TableHead>
-                <TableHead className="text-right">CO₂</TableHead>
+                <TableHead className="hidden text-right sm:table-cell">CO₂</TableHead>
                 <TableHead>When</TableHead>
               </TableRow>
             </TableHeader>
@@ -106,13 +106,13 @@ function Alerts() {
                   <TableCell className="font-medium">{e.label}</TableCell>
                   <TableCell>{when(e.start)}</TableCell>
                   <TableCell className="text-right tabular-nums">{hoursText(e.hours)}</TableCell>
-                  <TableCell className="text-right tabular-nums">{fmt(e.mean_excess_kw, 1)} kW</TableCell>
+                  <TableCell className="hidden text-right tabular-nums sm:table-cell">{fmt(e.mean_excess_kw, 1)} kW</TableCell>
                   <TableCell className="text-right tabular-nums">
                     {fmt(e.excess_kwh)} kWh
                     <span className="block text-xs text-muted-foreground">at least {fmt(e.excess_kwh_floor)}</span>
                   </TableCell>
                   <TableCell className="text-right tabular-nums">{usd(e.cost_usd)}</TableCell>
-                  <TableCell className="text-right tabular-nums">{fmt(e.co2_kg)} kg</TableCell>
+                  <TableCell className="hidden text-right tabular-nums sm:table-cell">{fmt(e.co2_kg)} kg</TableCell>
                   <TableCell>
                     <Badge variant={e.after_hours ? "default" : "secondary"}>{e.after_hours ? "After hours" : "Occupied hours"}</Badge>
                   </TableCell>
@@ -227,7 +227,7 @@ function Outage() {
           <div role="group" aria-label="Loads that must stay on" className="flex flex-wrap items-center gap-2 text-sm">
             <span className="text-muted-foreground">Must stay on:</span>
             {(["hvac", "lighting", "plug"] as const).map((k) => (
-              <label key={k} className="flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1 hover:bg-muted">
+              <label key={k} className="flex min-h-10 cursor-pointer items-center gap-1.5 rounded-full border px-3.5 py-1 hover:bg-muted sm:min-h-0 sm:px-3">
                 <input type="checkbox" checked={must.includes(k)} onChange={() => toggle(k)} className="accent-[var(--primary)]" />
                 {LOAD_LABEL[k]}
               </label>
