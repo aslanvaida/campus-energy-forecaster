@@ -6,6 +6,7 @@ PROJ_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJ_ROOT / "data"
 EXTERNAL_DATA_DIR = DATA_DIR / "external"
 LBNL_DIR = EXTERNAL_DATA_DIR / "lbnl"
+BDG2_DIR = EXTERNAL_DATA_DIR / "bdg2"
 WEB_DATA_DIR = PROJ_ROOT / "web" / "public" / "data"
 RESULTS_JSON = WEB_DATA_DIR / "results.json"
 
