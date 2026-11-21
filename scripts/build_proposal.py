@@ -33,7 +33,7 @@ R = json.loads(RESULTS_JSON.read_text())
 OV, W, AH, O, F, A = R["overview"], R["waste"], R["after_hours"], R["outage"], R["forecast"], R["assumptions"]
 PK = R["peak"]
 M = json.loads((RESULTS_JSON.parent / "multibuilding.json").read_text())
-DEMO_URL = ""   # set to the hosted dashboard address once it is live
+DEMO_URL = "https://aslanvaida.github.io/campus-energy-forecaster/"   # hosted dashboard (GitHub Pages)
 
 
 def n(x, d=0):

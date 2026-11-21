@@ -98,6 +98,8 @@ make web                                              # dashboard on http://loca
 pip install reportlab matplotlib && python scripts/build_proposal.py   # two-page proposal PDF in proposal/
 ```
 
+Live dashboard: https://aslanvaida.github.io/campus-energy-forecaster/
+
 `web/public/data/results.json` is committed, so the dashboard runs without downloading anything:
 `cd web && npm install && npm run dev`.
 
