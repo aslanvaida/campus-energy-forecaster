@@ -11,7 +11,7 @@ import { fmt, hoursText, results as R, usd } from "@/lib/results";
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-const field = "rounded-md border bg-background px-2 py-1 text-sm";
+const field = "min-h-10 rounded-md border bg-background px-2 py-1 text-sm sm:min-h-0";
 
 export function UploadAnalysis() {
   const [text, setText] = React.useState<string | null>(null);
@@ -79,12 +79,12 @@ export function UploadAnalysis() {
       <Card>
         <CardHeader className="gap-3">
           <div className="flex flex-wrap items-center gap-3">
-            <label className="cursor-pointer rounded-md border bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground">
+            <label className="flex min-h-10 cursor-pointer items-center rounded-md border bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground">
               Choose a CSV file
               <input type="file" accept=".csv,text/csv" className="sr-only" onChange={(e) => onFile(e.target.files?.[0])} />
             </label>
-            <button type="button" onClick={useSample} className="rounded-md border px-3 py-1.5 text-sm hover:bg-muted">Use the sample file</button>
-            <a href={`${BASE}/data/sample_hourly_kw.csv`} download className="text-sm underline underline-offset-4">Download the sample</a>
+            <button type="button" onClick={useSample} className="min-h-10 rounded-md border px-4 py-1.5 text-sm hover:bg-muted">Use the sample file</button>
+            <a href={`${BASE}/data/sample_hourly_kw.csv`} download className="inline-flex min-h-10 items-center text-sm underline underline-offset-4">Download the sample</a>
             {name && <Badge variant="secondary">{name}</Badge>}
           </div>
           {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
@@ -123,14 +123,14 @@ export function UploadAnalysis() {
                 <p className="mb-2 text-sm font-medium">Largest unusual runs</p>
                 {analysis.events.length === 0 ? <p className="text-sm text-muted-foreground">None found with this rule.</p> : (
                   <Table>
-                    <TableHeader><TableRow><TableHead>Started</TableHead><TableHead className="text-right">Hours</TableHead><TableHead className="text-right">Extra</TableHead><TableHead className="text-right">Cost</TableHead><TableHead>When</TableHead></TableRow></TableHeader>
+                    <TableHeader><TableRow><TableHead>Started</TableHead><TableHead className="text-right">Hours</TableHead><TableHead className="text-right">Extra</TableHead><TableHead className="hidden text-right sm:table-cell">Cost</TableHead><TableHead>When</TableHead></TableRow></TableHeader>
                     <TableBody>
                       {analysis.events.slice(0, 8).map((e) => (
                         <TableRow key={e.start}>
                           <TableCell>{e.start}</TableCell>
                           <TableCell className="text-right tabular-nums">{e.hours}</TableCell>
                           <TableCell className="text-right tabular-nums">{fmt(e.excessKwh)} kWh</TableCell>
-                          <TableCell className="text-right tabular-nums">{usd(e.excessKwh * Number(price))}</TableCell>
+                          <TableCell className="hidden text-right tabular-nums sm:table-cell">{usd(e.excessKwh * Number(price))}</TableCell>
                           <TableCell><Badge variant={e.afterHours ? "default" : "secondary"}>{e.afterHours ? "After hours" : "Occupied"}</Badge></TableCell>
                         </TableRow>
                       ))}
