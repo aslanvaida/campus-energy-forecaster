@@ -579,6 +579,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 16.7,
+        "runtime_h": 3.3,
+        "actual_runtime_h": 2.6,
+        "runtime_low_h": 2.65,
+        "runtime_high_h": 4.01
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -593,6 +607,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 56.37,
+        "runtime_h": 1.4,
+        "actual_runtime_h": 2.15,
+        "runtime_low_h": 0.94,
+        "runtime_high_h": 3.53
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -604,6 +632,20 @@
         "actual_runtime_h": 1.87,
         "runtime_low_h": 0.89,
         "runtime_high_h": 3.19
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 73.08,
+        "runtime_h": 1.0,
+        "actual_runtime_h": 1.2,
+        "runtime_low_h": 0.7,
+        "runtime_high_h": 1.87
        },
        {
         "keep": [
@@ -639,6 +681,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 16.7,
+        "runtime_h": 8.6,
+        "actual_runtime_h": 6.47,
+        "runtime_low_h": 6.51,
+        "runtime_high_h": 12.51
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -653,6 +709,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 56.37,
+        "runtime_h": 3.6,
+        "actual_runtime_h": 6.05,
+        "runtime_low_h": 2.33,
+        "runtime_high_h": 8.87
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -664,6 +734,20 @@
         "actual_runtime_h": 5.11,
         "runtime_low_h": 2.2,
         "runtime_high_h": 7.99
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 73.08,
+        "runtime_h": 2.5,
+        "actual_runtime_h": 2.94,
+        "runtime_low_h": 1.73,
+        "runtime_high_h": 4.7
        },
        {
         "keep": [
@@ -699,6 +783,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 16.7,
+        "runtime_h": 24.7,
+        "actual_runtime_h": 20.35,
+        "runtime_low_h": 19.49,
+        "runtime_high_h": 31.85
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -713,6 +811,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 56.37,
+        "runtime_h": 7.2,
+        "actual_runtime_h": 12.97,
+        "runtime_low_h": 4.63,
+        "runtime_high_h": 17.54
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -724,6 +836,20 @@
         "actual_runtime_h": 11.04,
         "runtime_low_h": 4.38,
         "runtime_high_h": 16.48
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 73.08,
+        "runtime_h": 5.0,
+        "actual_runtime_h": 6.24,
+        "runtime_low_h": 3.42,
+        "runtime_high_h": 9.94
        },
        {
         "keep": [
@@ -759,6 +885,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 16.7,
+        "runtime_h": 53.6,
+        "actual_runtime_h": 44.3,
+        "runtime_low_h": 40.56,
+        "runtime_high_h": 78.76
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -773,6 +913,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 56.37,
+        "runtime_h": 14.8,
+        "actual_runtime_h": 24.69,
+        "runtime_low_h": 9.27,
+        "runtime_high_h": 36.2
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -784,6 +938,20 @@
         "actual_runtime_h": 22.43,
         "runtime_low_h": 8.77,
         "runtime_high_h": 33.86
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 73.08,
+        "runtime_h": 10.6,
+        "actual_runtime_h": 15.04,
+        "runtime_low_h": 6.83,
+        "runtime_high_h": 22.58
        },
        {
         "keep": [
@@ -972,6 +1140,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 13.8,
+        "runtime_h": 3.4,
+        "actual_runtime_h": 2.88,
+        "runtime_low_h": 2.85,
+        "runtime_high_h": 5.0
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -986,6 +1168,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 28.27,
+        "runtime_h": 1.6,
+        "actual_runtime_h": 1.46,
+        "runtime_low_h": 1.44,
+        "runtime_high_h": 2.17
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -997,6 +1193,20 @@
         "actual_runtime_h": 1.36,
         "runtime_low_h": 1.34,
         "runtime_high_h": 1.99
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 42.07,
+        "runtime_h": 1.1,
+        "actual_runtime_h": 0.93,
+        "runtime_low_h": 0.97,
+        "runtime_high_h": 1.46
        },
        {
         "keep": [
@@ -1032,6 +1242,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 13.8,
+        "runtime_h": 13.7,
+        "actual_runtime_h": 13.17,
+        "runtime_low_h": 10.05,
+        "runtime_high_h": 16.56
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -1046,6 +1270,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 28.27,
+        "runtime_h": 3.7,
+        "actual_runtime_h": 3.2,
+        "runtime_low_h": 3.26,
+        "runtime_high_h": 5.09
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -1057,6 +1295,20 @@
         "actual_runtime_h": 3.01,
         "runtime_low_h": 3.05,
         "runtime_high_h": 4.71
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 42.07,
+        "runtime_h": 2.6,
+        "actual_runtime_h": 2.25,
+        "runtime_low_h": 2.27,
+        "runtime_high_h": 3.57
        },
        {
         "keep": [
@@ -1092,6 +1344,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 13.8,
+        "runtime_h": 30.6,
+        "actual_runtime_h": 31.79,
+        "runtime_low_h": 25.0,
+        "runtime_high_h": 35.54
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -1106,6 +1372,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 28.27,
+        "runtime_h": 9.1,
+        "actual_runtime_h": 6.7,
+        "runtime_low_h": 6.7,
+        "runtime_high_h": 23.85
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -1117,6 +1397,20 @@
         "actual_runtime_h": 6.21,
         "runtime_low_h": 6.09,
         "runtime_high_h": 23.14
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 42.07,
+        "runtime_h": 5.3,
+        "actual_runtime_h": 4.57,
+        "runtime_low_h": 4.56,
+        "runtime_high_h": 8.99
        },
        {
         "keep": [
@@ -1152,6 +1446,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 13.8,
+        "runtime_h": 64.7,
+        "actual_runtime_h": 66.42,
+        "runtime_low_h": 53.7,
+        "runtime_high_h": 69.81
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -1166,6 +1474,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 28.27,
+        "runtime_h": 27.2,
+        "actual_runtime_h": 21.44,
+        "runtime_low_h": 20.64,
+        "runtime_high_h": 58.72
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -1177,6 +1499,20 @@
         "actual_runtime_h": 20.49,
         "runtime_low_h": 19.23,
         "runtime_high_h": 57.09
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 42.07,
+        "runtime_h": 19.5,
+        "actual_runtime_h": 13.09,
+        "runtime_low_h": 12.21,
+        "runtime_high_h": 27.43
        },
        {
         "keep": [
@@ -1365,6 +1701,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 10.58,
+        "runtime_h": 8.1,
+        "actual_runtime_h": 7.95,
+        "runtime_low_h": 7.03,
+        "runtime_high_h": 8.98
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -1379,6 +1729,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 31.2,
+        "runtime_h": 3.0,
+        "actual_runtime_h": 2.76,
+        "runtime_low_h": 1.41,
+        "runtime_high_h": 19.81
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -1390,6 +1754,20 @@
         "actual_runtime_h": 2.75,
         "runtime_low_h": 1.4,
         "runtime_high_h": 19.81
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 41.78,
+        "runtime_h": 2.2,
+        "actual_runtime_h": 2.22,
+        "runtime_low_h": 1.17,
+        "runtime_high_h": 5.73
        },
        {
         "keep": [
@@ -1425,6 +1803,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 10.58,
+        "runtime_h": 19.5,
+        "actual_runtime_h": 19.5,
+        "runtime_low_h": 16.73,
+        "runtime_high_h": 21.92
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -1439,6 +1831,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 31.2,
+        "runtime_h": 7.0,
+        "actual_runtime_h": 5.49,
+        "runtime_low_h": 3.52,
+        "runtime_high_h": 34.35
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -1450,6 +1856,20 @@
         "actual_runtime_h": 5.46,
         "runtime_low_h": 3.49,
         "runtime_high_h": 33.97
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 41.78,
+        "runtime_h": 5.3,
+        "actual_runtime_h": 4.45,
+        "runtime_low_h": 2.93,
+        "runtime_high_h": 16.1
        },
        {
         "keep": [
@@ -1485,6 +1905,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 10.58,
+        "runtime_h": 35.9,
+        "actual_runtime_h": 35.65,
+        "runtime_low_h": 32.71,
+        "runtime_high_h": 38.25
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -1499,6 +1933,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 31.2,
+        "runtime_h": 13.0,
+        "actual_runtime_h": 10.24,
+        "runtime_low_h": 7.03,
+        "runtime_high_h": 57.03
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -1510,6 +1958,20 @@
         "actual_runtime_h": 10.19,
         "runtime_low_h": 6.96,
         "runtime_high_h": 53.53
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 41.78,
+        "runtime_h": 10.0,
+        "actual_runtime_h": 8.23,
+        "runtime_low_h": 5.86,
+        "runtime_high_h": 27.57
        },
        {
         "keep": [
@@ -1545,6 +2007,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 10.58,
+        "runtime_h": 59.2,
+        "actual_runtime_h": 55.57,
+        "runtime_low_h": 48.29,
+        "runtime_high_h": 65.2
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -1559,6 +2035,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 31.2,
+        "runtime_h": 26.1,
+        "actual_runtime_h": 21.4,
+        "runtime_low_h": 14.19,
+        "runtime_high_h": 115.05
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -1570,6 +2060,20 @@
         "actual_runtime_h": 21.07,
         "runtime_low_h": 14.0,
         "runtime_high_h": 102.91
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 41.78,
+        "runtime_h": 19.8,
+        "actual_runtime_h": 16.44,
+        "runtime_low_h": 11.69,
+        "runtime_high_h": 44.44
        },
        {
         "keep": [
@@ -1758,6 +2262,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 10.44,
+        "runtime_h": 7.7,
+        "actual_runtime_h": 7.79,
+        "runtime_low_h": 6.66,
+        "runtime_high_h": 8.7
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -1772,6 +2290,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 22.19,
+        "runtime_h": 2.6,
+        "actual_runtime_h": 43.49,
+        "runtime_low_h": 1.78,
+        "runtime_high_h": 4.88
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -1783,6 +2315,20 @@
         "actual_runtime_h": 42.05,
         "runtime_low_h": 1.65,
         "runtime_high_h": 4.79
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 32.63,
+        "runtime_h": 1.9,
+        "actual_runtime_h": 6.59,
+        "runtime_low_h": 1.36,
+        "runtime_high_h": 3.12
        },
        {
         "keep": [
@@ -1818,6 +2364,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 10.44,
+        "runtime_h": 19.8,
+        "actual_runtime_h": 19.98,
+        "runtime_low_h": 17.08,
+        "runtime_high_h": 22.24
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -1832,6 +2392,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 22.19,
+        "runtime_h": 7.0,
+        "actual_runtime_h": 46.69,
+        "runtime_low_h": 4.51,
+        "runtime_high_h": 18.81
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -1843,6 +2417,20 @@
         "actual_runtime_h": 46.25,
         "runtime_low_h": 4.27,
         "runtime_high_h": 18.32
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 32.63,
+        "runtime_h": 5.0,
+        "actual_runtime_h": 17.6,
+        "runtime_low_h": 3.49,
+        "runtime_high_h": 7.89
        },
        {
         "keep": [
@@ -1878,6 +2466,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 10.44,
+        "runtime_h": 40.3,
+        "actual_runtime_h": 40.42,
+        "runtime_low_h": 35.06,
+        "runtime_high_h": 45.23
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -1892,6 +2494,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 22.19,
+        "runtime_h": 17.4,
+        "actual_runtime_h": 65.35,
+        "runtime_low_h": 9.35,
+        "runtime_high_h": 43.72
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -1903,6 +2519,20 @@
         "actual_runtime_h": 63.67,
         "runtime_low_h": 9.05,
         "runtime_high_h": 43.52
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 32.63,
+        "runtime_h": 11.3,
+        "actual_runtime_h": 35.22,
+        "runtime_low_h": 7.22,
+        "runtime_high_h": 20.85
        },
        {
         "keep": [
@@ -1938,6 +2568,20 @@
        },
        {
         "keep": [
+         "plug"
+        ],
+        "shed": [
+         "hvac",
+         "lighting"
+        ],
+        "mean_kw": 10.44,
+        "runtime_h": 69.5,
+        "actual_runtime_h": 69.62,
+        "runtime_low_h": 64.26,
+        "runtime_high_h": 78.63
+       },
+       {
+        "keep": [
          "lighting",
          "plug"
         ],
@@ -1952,6 +2596,20 @@
        },
        {
         "keep": [
+         "hvac"
+        ],
+        "shed": [
+         "lighting",
+         "plug"
+        ],
+        "mean_kw": 22.19,
+        "runtime_h": 36.9,
+        "actual_runtime_h": 72.32,
+        "runtime_low_h": 19.47,
+        "runtime_high_h": 60.53
+       },
+       {
+        "keep": [
          "hvac",
          "lighting"
         ],
@@ -1963,6 +2621,20 @@
         "actual_runtime_h": 70.94,
         "runtime_low_h": 18.95,
         "runtime_high_h": 60.29
+       },
+       {
+        "keep": [
+         "hvac",
+         "plug"
+        ],
+        "shed": [
+         "lighting"
+        ],
+        "mean_kw": 32.63,
+        "runtime_h": 25.5,
+        "actual_runtime_h": 49.19,
+        "runtime_low_h": 14.99,
+        "runtime_high_h": 44.07
        },
        {
         "keep": [
@@ -2143,13 +2815,124 @@
    500,
    1000
   ],
-  "must_keep": [
+  "default_must_keep": [
    "lighting"
   ],
   "backup_assumptions": {
    "usable_fraction": 0.9,
    "efficiency": 0.92
   }
+ },
+ "peak": {
+  "accuracy": {
+   "n_days": 306,
+   "mae_kw": 14.0,
+   "mape_pct": 22.5,
+   "peak_hour_within_2h_pct": 54.6,
+   "top_days": 31,
+   "top_days_caught_pct": 93.5
+  },
+  "shift": [
+   {
+    "share_shifted_pct": 10,
+    "days_acted_on": 31,
+    "mean_peak_reduction_kw": 6.8,
+    "mean_peak_reduction_pct": 5.4,
+    "annual_peak_before_kw": 164.1,
+    "annual_peak_after_kw": 151.9,
+    "energy_conserved": true
+   },
+   {
+    "share_shifted_pct": 20,
+    "days_acted_on": 31,
+    "mean_peak_reduction_kw": 11.5,
+    "mean_peak_reduction_pct": 9.1,
+    "annual_peak_before_kw": 164.1,
+    "annual_peak_after_kw": 141.7,
+    "energy_conserved": true
+   },
+   {
+    "share_shifted_pct": 30,
+    "days_acted_on": 31,
+    "mean_peak_reduction_kw": 13.4,
+    "mean_peak_reduction_pct": 10.6,
+    "annual_peak_before_kw": 164.1,
+    "annual_peak_after_kw": 141.7,
+    "energy_conserved": true
+   }
+  ],
+  "next_days": [
+   {
+    "date": "2019-08-12",
+    "forecast_kw": 121.1,
+    "forecast_hour": 17,
+    "actual_kw": 117.8,
+    "actual_hour": 11
+   },
+   {
+    "date": "2019-08-13",
+    "forecast_kw": 122.2,
+    "forecast_hour": 15,
+    "actual_kw": 124.3,
+    "actual_hour": 19
+   },
+   {
+    "date": "2019-08-14",
+    "forecast_kw": 119.6,
+    "forecast_hour": 12,
+    "actual_kw": 152.3,
+    "actual_hour": 14
+   },
+   {
+    "date": "2019-09-13",
+    "forecast_kw": 118.6,
+    "forecast_hour": 11,
+    "actual_kw": 143.2,
+    "actual_hour": 14
+   },
+   {
+    "date": "2019-09-24",
+    "forecast_kw": 124.3,
+    "forecast_hour": 14,
+    "actual_kw": 112.2,
+    "actual_hour": 15
+   },
+   {
+    "date": "2019-09-25",
+    "forecast_kw": 122.8,
+    "forecast_hour": 15,
+    "actual_kw": 123.1,
+    "actual_hour": 14
+   },
+   {
+    "date": "2019-10-22",
+    "forecast_kw": 119.6,
+    "forecast_hour": 14,
+    "actual_kw": 107.7,
+    "actual_hour": 19
+   },
+   {
+    "date": "2019-10-23",
+    "forecast_kw": 126.1,
+    "forecast_hour": 15,
+    "actual_kw": 97.1,
+    "actual_hour": 11
+   },
+   {
+    "date": "2019-10-24",
+    "forecast_kw": 125.4,
+    "forecast_hour": 15,
+    "actual_kw": 164.1,
+    "actual_hour": 15
+   },
+   {
+    "date": "2019-10-25",
+    "forecast_kw": 121.5,
+    "forecast_hour": 16,
+    "actual_kw": 158.1,
+    "actual_hour": 15
+   }
+  ]
  },
  "series": {
   "window": "2019-06-03 to 2019-06-16",

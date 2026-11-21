@@ -6,6 +6,7 @@ import { BandChart } from "@/components/band-chart";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { multi } from "@/lib/multibuilding";
 import { LOAD_LABEL, fmt, hoursText, results as R, usd, when } from "@/lib/results";
 
 function Section({ id, title, lead, children }: { id: string; title: string; lead: string; children: React.ReactNode }) {
@@ -72,7 +73,9 @@ export function Dashboard() {
       <Alerts />
       <AfterHours whatIf={whatIf} />
       <Forecast />
+      <Peaks />
       <Outage />
+      <Scale />
       <Honesty />
     </div>
   );
@@ -204,9 +207,12 @@ function Outage() {
   const O = R.outage;
   const [sc, setSc] = React.useState(0);
   const [cap, setCap] = React.useState(O.batteries_kwh[1]);
+  const [must, setMust] = React.useState<string[]>(O.default_must_keep);
   const scenario = O.scenarios[sc];
-  const options = scenario.batteries.find((b) => b.capacity_kwh === cap)!.options;
-  const all = options.find((o) => o.shed.length === 0)!;
+  const every = scenario.batteries.find((b) => b.capacity_kwh === cap)!.options;
+  const options = every.filter((o) => must.every((m) => o.keep.includes(m)));
+  const all = every.find((o) => o.shed.length === 0)!;
+  const toggle = (k: string) => setMust((m) => (m.includes(k) ? m.filter((x) => x !== k) : [...m, k]));
   const best = options[0];
   const maxH = Math.max(...options.map((o) => o.runtime_h));
   const prof = scenario.load_profile;
@@ -218,11 +224,20 @@ function Outage() {
         <CardHeader className="gap-3">
           <Pills label="Outage starts" value={sc} onChange={setSc} items={O.scenarios.map((s, i) => ({ id: i, text: s.label }))} />
           <Pills label="Battery size" value={cap} onChange={setCap} items={O.batteries_kwh.map((c) => ({ id: c, text: `${fmt(c)} kWh` }))} />
+          <div role="group" aria-label="Loads that must stay on" className="flex flex-wrap items-center gap-2 text-sm">
+            <span className="text-muted-foreground">Must stay on:</span>
+            {(["hvac", "lighting", "plug"] as const).map((k) => (
+              <label key={k} className="flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1 hover:bg-muted">
+                <input type="checkbox" checked={must.includes(k)} onChange={() => toggle(k)} className="accent-[var(--primary)]" />
+                {LOAD_LABEL[k]}
+              </label>
+            ))}
+          </div>
         </CardHeader>
         <CardContent className="flex flex-col gap-5">
           <div className="grid gap-3 sm:grid-cols-3">
             <Kpi label="Everything on" value={hoursText(all.runtime_h)} sub={`${fmt(all.mean_kw)} kW average, ${all.actual_runtime_h != null ? `${hoursText(all.actual_runtime_h)} with the real load` : ""}`} />
-            <Kpi label="Longest-lasting plan" value={hoursText(best.runtime_h)} sub={`keep ${keepText(best.keep)} only; ${fmt(gain, 1)}× longer`} />
+            <Kpi label="Longest-lasting plan" value={hoursText(best.runtime_h)} sub={`keep ${keepText(best.keep)}; ${fmt(gain, 1)}× longer`} />
             <Kpi label="Range for best plan" value={`${best.runtime_low_h != null ? hoursText(best.runtime_low_h) : "?"} to ${best.runtime_high_h != null ? hoursText(best.runtime_high_h) : "?"}`} sub="if the load lands at the top or bottom of the forecast band" />
           </div>
           <Table>
@@ -258,8 +273,103 @@ function Outage() {
                 </div>
               ))}
             </div>
-            <p className="mt-1 text-xs text-muted-foreground">Blue: HVAC · amber: plug loads · green: lighting. Battery assumptions: {fmt(100 * O.backup_assumptions.usable_fraction)}% usable, {fmt(100 * O.backup_assumptions.efficiency)}% efficient; lighting is always kept.</p>
+            <p className="mt-1 text-xs text-muted-foreground">Blue: HVAC · amber: plug loads · green: lighting. Battery assumptions: {fmt(100 * O.backup_assumptions.usable_fraction)}% usable, {fmt(100 * O.backup_assumptions.efficiency)}% efficient; pick the loads that must stay on, and the plan keeps those and ranks the rest.</p>
           </div>
+        </CardContent>
+      </Card>
+    </Section>
+  );
+}
+
+function Peaks() {
+  const P = R.peak;
+  const a = P.accuracy;
+  return (
+    <Section id="peaks" title="Peak-load management" lead="Tomorrow's highest demand, forecast a day ahead, and what moving flexible load out of those hours would do to it. High peaks drive demand charges where a tariff has them and are what a weak grid or a backup system struggles with.">
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Kpi label="Peak size forecast" value={`${fmt(a.mae_kw, 1)} kW off`} sub={`on average, over ${a.n_days} days (${fmt(a.mape_pct)}% of the peak)`} />
+        <Kpi label="Highest-peak days caught" value={`${fmt(a.top_days_caught_pct)}%`} sub={`of the ${a.top_days} days with the highest real peak were among the ${2 * a.top_days} days flagged`} />
+        <Kpi label="Peak hour right" value={`${fmt(a.peak_hour_within_2h_pct)}%`} sub="of days: forecast peak hour within 2 hours of the real one" />
+      </div>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Load-shifting estimate</CardTitle>
+            <CardDescription>On the {P.shift[0].days_acted_on} days with the highest forecast peak, move a share of HVAC load out of the forecast peak hours into the day&apos;s quietest hours (for example pre-cooling). Planned from the forecast, scored on what really happened. A best case: it assumes the load can be moved freely.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader><TableRow><TableHead>HVAC load moved</TableHead><TableHead className="text-right">Typical peak cut</TableHead><TableHead className="text-right">Year&apos;s highest peak</TableHead></TableRow></TableHeader>
+              <TableBody>
+                {P.shift.map((s) => (
+                  <TableRow key={s.share_shifted_pct}>
+                    <TableCell className="font-medium">{s.share_shifted_pct}%</TableCell>
+                    <TableCell className="text-right tabular-nums">{fmt(s.mean_peak_reduction_kw, 1)} kW ({fmt(s.mean_peak_reduction_pct, 1)}%)</TableCell>
+                    <TableCell className="text-right tabular-nums">{fmt(s.annual_peak_before_kw)} to {fmt(s.annual_peak_after_kw)} kW</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Highest forecast peaks</CardTitle>
+            <CardDescription>The ten days with the highest forecast peak, and what happened.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader><TableRow><TableHead>Day</TableHead><TableHead className="text-right">Forecast</TableHead><TableHead className="text-right">Actual</TableHead></TableRow></TableHeader>
+              <TableBody>
+                {P.next_days.map((d) => (
+                  <TableRow key={d.date}>
+                    <TableCell className="font-medium">{when(d.date + "T00:00").split(",")[0]}</TableCell>
+                    <TableCell className="text-right tabular-nums">{fmt(d.forecast_kw)} kW at {d.forecast_hour}:00</TableCell>
+                    <TableCell className="text-right tabular-nums">{d.actual_kw != null ? `${fmt(d.actual_kw)} kW at ${d.actual_hour}:00` : "n/a"}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </div>
+    </Section>
+  );
+}
+
+function Scale() {
+  const groups = Object.values(multi.groups);
+  return (
+    <Section id="scale" title="Does it work beyond one office?" lead="The same method, unchanged, was run on a random sample of schools and healthcare buildings from a second public dataset. This is a check of the method on whole-building electricity, not a pilot.">
+      <Card>
+        <CardContent className="flex flex-col gap-3">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Building type</TableHead>
+                <TableHead className="text-right">Buildings</TableHead>
+                <TableHead className="text-right">Error vs last week (median)</TableHead>
+                <TableHead className="text-right">Buildings that beat it</TableHead>
+                <TableHead className="text-right">80% band held</TableHead>
+                <TableHead className="text-right">Large faults found</TableHead>
+                <TableHead className="text-right">Alerts / 30 days</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {groups.map((g) => (
+                <TableRow key={g.label}>
+                  <TableCell className="font-medium">{g.label}</TableCell>
+                  <TableCell className="text-right tabular-nums">{g.n_buildings} at {g.n_sites} sites</TableCell>
+                  <TableCell className="text-right tabular-nums">{fmt(g.median_mae_gain_vs_naive_pct)}% lower</TableCell>
+                  <TableCell className="text-right tabular-nums">{fmt(g.share_buildings_beating_naive_pct)}%</TableCell>
+                  <TableCell className="text-right tabular-nums">{fmt(g.median_band_coverage_pct)}%</TableCell>
+                  <TableCell className="text-right tabular-nums">{fmt(g.median_recall_pct.large)}%</TableCell>
+                  <TableCell className="text-right tabular-nums">{fmt(g.median_flagged_events_per_30d, 1)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <p className="text-sm text-muted-foreground">{multi.method} Data: {multi.dataset.name}, licence {multi.dataset.license}. Medians across buildings. The emergency planner needs end-use meters, which this dataset does not have, so it is not part of this check.</p>
         </CardContent>
       </Card>
     </Section>

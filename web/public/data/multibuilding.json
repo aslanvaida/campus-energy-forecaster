@@ -1,0 +1,319 @@
+{
+ "dataset": {
+  "name": "Building Data Genome Project 2 (BDG2)",
+  "license": "CC BY 4.0",
+  "source": "https://zenodo.org/records/3887306",
+  "citation": "Miller, C., Kathirgamanathan, A., Picchetti, B., et al. (2020). The Building Data Genome Project 2, energy meter data from the ASHRAE Great Energy Predictor III competition. Scientific Data."
+ },
+ "method": "Random sample (fixed seed) of 15 buildings per use with at least 95% complete electricity data in 2016 and 2017. Each month of 2017 is predicted by a model fitted on the trailing 12 months. Same code as the demo building, whole-building meter only.",
+ "groups": {
+  "Education": {
+   "label": "Schools and colleges",
+   "n_buildings": 15,
+   "n_sites": 7,
+   "median_mae_gain_vs_naive_pct": 20.1,
+   "share_buildings_beating_naive_pct": 67.0,
+   "median_cv_rmse_pct": 19.3,
+   "median_band_coverage_pct": 79.9,
+   "median_flagged_events_per_30d": 1.9,
+   "median_recall_pct": {
+    "small": 50.0,
+    "medium": 75.0,
+    "large": 95.0
+   }
+  },
+  "Healthcare": {
+   "label": "Healthcare buildings",
+   "n_buildings": 15,
+   "n_sites": 4,
+   "median_mae_gain_vs_naive_pct": 7.9,
+   "share_buildings_beating_naive_pct": 53.0,
+   "median_cv_rmse_pct": 9.9,
+   "median_band_coverage_pct": 75.8,
+   "median_flagged_events_per_30d": 1.2,
+   "median_recall_pct": {
+    "small": 70.0,
+    "medium": 95.0,
+    "large": 100.0
+   }
+  }
+ },
+ "all": {
+  "n_buildings": 30,
+  "median_mae_gain_vs_naive_pct": 12.8,
+  "share_buildings_beating_naive_pct": 60.0,
+  "median_band_coverage_pct": 77.2
+ },
+ "buildings": [
+  {
+   "building_id": "Bull_education_Brady",
+   "usage": "Education",
+   "site_id": "Bull",
+   "cv_rmse_pct": 15.55,
+   "mae_gain_vs_naive_pct": 24.1,
+   "band_coverage_pct": 81.2,
+   "mean_kw": 32.04
+  },
+  {
+   "building_id": "Fox_education_Virginia",
+   "usage": "Education",
+   "site_id": "Fox",
+   "cv_rmse_pct": 30.18,
+   "mae_gain_vs_naive_pct": 21.1,
+   "band_coverage_pct": 81.6,
+   "mean_kw": 8.79
+  },
+  {
+   "building_id": "Lamb_education_Garry",
+   "usage": "Education",
+   "site_id": "Lamb",
+   "cv_rmse_pct": 390.97,
+   "mae_gain_vs_naive_pct": -185.1,
+   "band_coverage_pct": 76.4,
+   "mean_kw": 1.24
+  },
+  {
+   "building_id": "Rat_education_Sherwood",
+   "usage": "Education",
+   "site_id": "Rat",
+   "cv_rmse_pct": 13.31,
+   "mae_gain_vs_naive_pct": 50.6,
+   "band_coverage_pct": 84.4,
+   "mean_kw": 102.85
+  },
+  {
+   "building_id": "Panther_education_Genevieve",
+   "usage": "Education",
+   "site_id": "Panther",
+   "cv_rmse_pct": 35.18,
+   "mae_gain_vs_naive_pct": -212.7,
+   "band_coverage_pct": 85.0,
+   "mean_kw": 265.47
+  },
+  {
+   "building_id": "Hog_education_Jewel",
+   "usage": "Education",
+   "site_id": "Hog",
+   "cv_rmse_pct": 15.29,
+   "mae_gain_vs_naive_pct": 25.3,
+   "band_coverage_pct": 79.9,
+   "mean_kw": 69.07
+  },
+  {
+   "building_id": "Rat_education_Lynn",
+   "usage": "Education",
+   "site_id": "Rat",
+   "cv_rmse_pct": 15.33,
+   "mae_gain_vs_naive_pct": 39.9,
+   "band_coverage_pct": 77.4,
+   "mean_kw": 102.57
+  },
+  {
+   "building_id": "Hog_education_Bruno",
+   "usage": "Education",
+   "site_id": "Hog",
+   "cv_rmse_pct": 3.94,
+   "mae_gain_vs_naive_pct": 9.2,
+   "band_coverage_pct": 74.6,
+   "mean_kw": 263.8
+  },
+  {
+   "building_id": "Panther_education_Neal",
+   "usage": "Education",
+   "site_id": "Panther",
+   "cv_rmse_pct": 38.51,
+   "mae_gain_vs_naive_pct": -7.2,
+   "band_coverage_pct": 78.1,
+   "mean_kw": 235.55
+  },
+  {
+   "building_id": "Wolf_education_Clarissa",
+   "usage": "Education",
+   "site_id": "Wolf",
+   "cv_rmse_pct": 16.29,
+   "mae_gain_vs_naive_pct": 36.0,
+   "band_coverage_pct": 81.0,
+   "mean_kw": 51.83
+  },
+  {
+   "building_id": "Bull_education_Dottie",
+   "usage": "Education",
+   "site_id": "Bull",
+   "cv_rmse_pct": 19.27,
+   "mae_gain_vs_naive_pct": -69.1,
+   "band_coverage_pct": 73.8,
+   "mean_kw": 1215.32
+  },
+  {
+   "building_id": "Lamb_education_Rodrigo",
+   "usage": "Education",
+   "site_id": "Lamb",
+   "cv_rmse_pct": 67.87,
+   "mae_gain_vs_naive_pct": 11.7,
+   "band_coverage_pct": 76.6,
+   "mean_kw": 26.19
+  },
+  {
+   "building_id": "Rat_education_Nona",
+   "usage": "Education",
+   "site_id": "Rat",
+   "cv_rmse_pct": 31.12,
+   "mae_gain_vs_naive_pct": 20.1,
+   "band_coverage_pct": 83.8,
+   "mean_kw": 98.78
+  },
+  {
+   "building_id": "Fox_education_Burton",
+   "usage": "Education",
+   "site_id": "Fox",
+   "cv_rmse_pct": 15.35,
+   "mae_gain_vs_naive_pct": 25.7,
+   "band_coverage_pct": 81.3,
+   "mean_kw": 45.89
+  },
+  {
+   "building_id": "Rat_education_Pat",
+   "usage": "Education",
+   "site_id": "Rat",
+   "cv_rmse_pct": 68.43,
+   "mae_gain_vs_naive_pct": -670.2,
+   "band_coverage_pct": 45.0,
+   "mean_kw": 93.32
+  },
+  {
+   "building_id": "Mouse_health_Estela",
+   "usage": "Healthcare",
+   "site_id": "Mouse",
+   "cv_rmse_pct": 39.61,
+   "mae_gain_vs_naive_pct": -120.2,
+   "band_coverage_pct": 67.3,
+   "mean_kw": 323.5
+  },
+  {
+   "building_id": "Hog_health_Kesha",
+   "usage": "Healthcare",
+   "site_id": "Hog",
+   "cv_rmse_pct": 2.92,
+   "mae_gain_vs_naive_pct": 28.0,
+   "band_coverage_pct": 83.7,
+   "mean_kw": 246.2
+  },
+  {
+   "building_id": "Rat_health_Gaye",
+   "usage": "Healthcare",
+   "site_id": "Rat",
+   "cv_rmse_pct": 13.34,
+   "mae_gain_vs_naive_pct": 35.7,
+   "band_coverage_pct": 78.1,
+   "mean_kw": 38.12
+  },
+  {
+   "building_id": "Mouse_health_Ileana",
+   "usage": "Healthcare",
+   "site_id": "Mouse",
+   "cv_rmse_pct": 41.79,
+   "mae_gain_vs_naive_pct": -76.7,
+   "band_coverage_pct": 66.1,
+   "mean_kw": 31.62
+  },
+  {
+   "building_id": "Rat_health_Tanya",
+   "usage": "Healthcare",
+   "site_id": "Rat",
+   "cv_rmse_pct": 24.39,
+   "mae_gain_vs_naive_pct": -6.9,
+   "band_coverage_pct": 73.7,
+   "mean_kw": 56.8
+  },
+  {
+   "building_id": "Rat_health_Guy",
+   "usage": "Healthcare",
+   "site_id": "Rat",
+   "cv_rmse_pct": 7.75,
+   "mae_gain_vs_naive_pct": 28.2,
+   "band_coverage_pct": 74.8,
+   "mean_kw": 1341.82
+  },
+  {
+   "building_id": "Eagle_health_Vincenza",
+   "usage": "Healthcare",
+   "site_id": "Eagle",
+   "cv_rmse_pct": 9.55,
+   "mae_gain_vs_naive_pct": 22.9,
+   "band_coverage_pct": 81.2,
+   "mean_kw": 53.44
+  },
+  {
+   "building_id": "Eagle_health_Lucinda",
+   "usage": "Healthcare",
+   "site_id": "Eagle",
+   "cv_rmse_pct": 8.36,
+   "mae_gain_vs_naive_pct": 18.6,
+   "band_coverage_pct": 78.2,
+   "mean_kw": 582.43
+  },
+  {
+   "building_id": "Eagle_health_Margo",
+   "usage": "Healthcare",
+   "site_id": "Eagle",
+   "cv_rmse_pct": 26.77,
+   "mae_gain_vs_naive_pct": -83.5,
+   "band_coverage_pct": 77.0,
+   "mean_kw": 56.4
+  },
+  {
+   "building_id": "Hog_health_Jenny",
+   "usage": "Healthcare",
+   "site_id": "Hog",
+   "cv_rmse_pct": 5.93,
+   "mae_gain_vs_naive_pct": 20.4,
+   "band_coverage_pct": 76.8,
+   "mean_kw": 179.58
+  },
+  {
+   "building_id": "Eagle_health_Reuben",
+   "usage": "Healthcare",
+   "site_id": "Eagle",
+   "cv_rmse_pct": 9.88,
+   "mae_gain_vs_naive_pct": 7.9,
+   "band_coverage_pct": 75.8,
+   "mean_kw": 214.73
+  },
+  {
+   "building_id": "Eagle_health_Reba",
+   "usage": "Healthcare",
+   "site_id": "Eagle",
+   "cv_rmse_pct": 8.43,
+   "mae_gain_vs_naive_pct": -44.2,
+   "band_coverage_pct": 69.5,
+   "mean_kw": 442.01
+  },
+  {
+   "building_id": "Eagle_health_Gregoria",
+   "usage": "Healthcare",
+   "site_id": "Eagle",
+   "cv_rmse_pct": 74.85,
+   "mae_gain_vs_naive_pct": -403.0,
+   "band_coverage_pct": 65.0,
+   "mean_kw": 383.36
+  },
+  {
+   "building_id": "Mouse_health_Justin",
+   "usage": "Healthcare",
+   "site_id": "Mouse",
+   "cv_rmse_pct": 36.76,
+   "mae_gain_vs_naive_pct": -68.1,
+   "band_coverage_pct": 67.2,
+   "mean_kw": 693.87
+  },
+  {
+   "building_id": "Hog_health_Hisako",
+   "usage": "Healthcare",
+   "site_id": "Hog",
+   "cv_rmse_pct": 4.24,
+   "mae_gain_vs_naive_pct": 14.0,
+   "band_coverage_pct": 77.5,
+   "mean_kw": 201.88
+  }
+ ]
+}

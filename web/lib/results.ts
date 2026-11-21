@@ -70,7 +70,7 @@ export const results = raw as unknown as {
   };
   outage: {
     batteries_kwh: number[];
-    must_keep: string[];
+    default_must_keep: string[];
     backup_assumptions: { usable_fraction: number; efficiency: number };
     accuracy: { battery_kwh: number; n_starts: number; n_skipped_missing_data: number; mean_actual_runtime_h: number; mae_h: number; mape_pct: number; bias_h: number };
     scenarios: {
@@ -80,6 +80,11 @@ export const results = raw as unknown as {
       load_profile: { hour: number; hvac: number; lighting: number; plug: number }[];
       batteries: { capacity_kwh: number; options: OutageOption[] }[];
     }[];
+  };
+  peak: {
+    accuracy: { n_days: number; mae_kw: number; mape_pct: number; peak_hour_within_2h_pct: number; top_days: number; top_days_caught_pct: number };
+    shift: { share_shifted_pct: number; days_acted_on: number; mean_peak_reduction_kw: number; mean_peak_reduction_pct: number; annual_peak_before_kw: number; annual_peak_after_kw: number }[];
+    next_days: { date: string; forecast_kw: number; forecast_hour: number; actual_kw: number | null; actual_hour: number | null }[];
   };
   series: { window: string; hours: string[] } & Record<string, unknown>;
 };
