@@ -22,7 +22,7 @@ grid goes down** as the second feature.
 5. **Emergency power planner.** Given a battery size, an outage start and the loads that must stay on, runtime for every
    combination of loads kept on, with the range implied by the forecast band, checked against the load the building actually drew.
 6. **Dashboard** (`web/`) for a facilities manager: alerts, savings, the planner and a page on how far to trust each
-   number. It is a static page; nothing is trained in the browser. It also shows the same method run on 30 schools and healthcare buildings.
+   number. It is a static page; nothing is trained in the browser. A section lets you upload your own hourly CSV for a quick in-browser look (typical-week baseline, not the full model; the file never leaves your machine). It also shows the same method run on 30 schools and healthcare buildings.
 
 ## Results
 

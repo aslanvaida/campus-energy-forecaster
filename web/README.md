@@ -3,8 +3,8 @@
 A static Next.js + TypeScript + Tailwind page for the energy tool. It has no backend and trains nothing: every figure it
 shows is read from `public/data/results.json`, which `scripts/run_analysis.py` writes from the Python code in the repo root.
 
-Sections: headline numbers, waste alerts, the quiet-hours opportunity, next-day forecast with its uncertainty band, the
-emergency power planner (outage start and battery size are selectable), and a page on how far to trust each result.
+An animated hero sits at the top. Sections: headline numbers, waste alerts, the quiet-hours opportunity, next-day forecast with its uncertainty band, the
+emergency power planner (outage start, battery size and the loads that must stay on are selectable), a check on schools and healthcare buildings, an in-browser CSV upload (`lib/quick-analysis.ts`: a typical-week baseline, runs in the browser, the file is not uploaded), and a page on how far to trust each result.
 
 ```bash
 cd web
@@ -22,5 +22,8 @@ components/dashboard.tsx     Sections (alerts, quiet hours, forecast, outage pla
 components/band-chart.tsx    SVG chart: actual load against the forecast band
 components/ui/               Card, table, badge and related primitives
 lib/results.ts               Types for results.json and number formatting
+lib/quick-analysis.ts        CSV parsing and the quick baseline analysis used by the upload section
+components/upload-analysis.tsx  The upload section
+components/hero-vortex.tsx   Animated particle background (three.js)
 public/data/results.json     Generated, committed so the dashboard runs without the dataset
 ```
