@@ -4,15 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "campus_energy_forecaster"
-version = "0.1.0"
-description = "Predicting campus building energy usage from usage history, weather, occupancy and building info (NTU Datathon 2026, Track 1)."
+version = "0.2.0"
+description = "Building energy forecasting and efficiency tool: waste detection and outage-runtime planning from hourly meter data."
 authors = [{ name = "Aslan Shaukat Vaida" }]
 requires-python = ">=3.10"
-dependencies = ["numpy", "pandas", "scipy", "scikit-learn==1.8.0", "xgboost==3.4.1", "matplotlib", "seaborn"]
-
-[project.optional-dependencies]
-external = ["kagglehub"]
-web = ["fastapi", "uvicorn", "python-multipart"]
+dependencies = ["numpy", "pandas", "scikit-learn>=1.4"]
 
 [tool.setuptools]
-packages = ["campus_energy_forecaster", "campus_energy_forecaster.modeling"]
+packages = ["campus_energy_forecaster"]
