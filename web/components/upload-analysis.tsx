@@ -68,7 +68,7 @@ export function UploadAnalysis() {
   const runtimeAll = analysis ? outageRuntime(analysis.weekly, dow, hour, Number(cap) || 0, 0) : NaN;
 
   return (
-    <section id="upload" aria-labelledby="upload-heading" className="flex flex-col gap-4">
+    <section id="upload-panel" aria-labelledby="upload-heading" className="flex flex-col gap-4">
       <div>
         <h2 id="upload-heading" className="text-2xl font-semibold tracking-tight">Try it on your own meter data</h2>
         <p className="mt-1 max-w-3xl text-muted-foreground text-pretty">

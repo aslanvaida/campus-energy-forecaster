@@ -1,4 +1,4 @@
-import { Dashboard } from "@/components/dashboard";
+import { AppShell } from "@/components/app-shell";
 import { HeroVortex } from "@/components/hero-vortex";
 import { Badge } from "@/components/ui/badge";
 import { results } from "@/lib/results";
@@ -19,13 +19,21 @@ export default function Home() {
             carbon figure on it, and shows how long critical loads can keep running on backup power when the grid goes down. It
             runs on hourly meter data that most facilities already have.
           </p>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <a href="#upload" className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow transition-opacity hover:opacity-90">
+              Analyze your own meter data
+            </a>
+            <a href="#demo" className="rounded-lg border bg-background/60 px-5 py-2.5 text-sm font-medium backdrop-blur hover:bg-muted">
+              See the demo building
+            </a>
+          </div>
           <p className="mt-3 text-sm text-muted-foreground">
             Demo data: {results.dataset.name}, a real office building, {results.dataset.period}. Public data, licence {results.dataset.license}.
-            Have your own meter data? <a href="#upload" className="underline underline-offset-4">Try it on your own CSV</a>.
+            Your own file is analysed in your browser and never uploaded.
           </p>
         </div>
       </header>
-      <Dashboard />
+      <AppShell />
     </main>
   );
 }
