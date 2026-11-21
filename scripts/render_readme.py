@@ -48,6 +48,13 @@ def block(r):
     m20 = ov["mean_kw_by_year"]
     L.append(f"\nIn 2020 the plug and lighting loads dropped sharply (plug averaged {n(m20['2020']['plug'], 1)} kW against {n(m20['2019']['plug'], 1)} kW in 2019), "
              "and a model trained on the earlier year does worse than the naive rule on them. That is reported, not hidden.\n")
+    pk = r["peak"]
+    pa = pk["accuracy"]
+    L.append("**Peak-load management**\n")
+    L.append(f"- Next-day peak forecast over {n(pa['n_days'])} days: off by {n(pa['mae_kw'], 1)} kW on average ({n(pa['mape_pct'])}% of the peak); the forecast peak hour is within 2 hours of the real one on {n(pa['peak_hour_within_2h_pct'])}% of days; "
+             f"{n(pa['top_days_caught_pct'])}% of the {pa['top_days']} highest-peak days are among the {2 * pa['top_days']} days flagged.")
+    L.append(f"- Load shifting (best case, planned from the forecast and scored on actual load, on the {pk['shift'][0]['days_acted_on']} days with the highest forecast peak): "
+             + "; ".join(f"moving {x['share_shifted_pct']}% of HVAC load out of the peak hours cuts the typical peak by {n(x['mean_peak_reduction_kw'], 1)} kW ({n(x['mean_peak_reduction_pct'], 1)}%) and the year's highest peak from {n(x['annual_peak_before_kw'])} to {n(x['annual_peak_after_kw'])} kW" for x in pk["shift"]) + "."+"\n")
     L.append("**Emergency power**\n")
     acc = o["accuracy"]
     L.append(f"- Backup runtime forecast versus the runtime the building's actual load would have given, for {n(acc['n_starts'])} outages starting on weekday 9 am and Saturday 10 pm in 2019 "
@@ -55,7 +62,7 @@ def block(r):
     sc = o["scenarios"][0]
     b250 = next(b for b in sc["batteries"] if b["capacity_kwh"] == 250)["options"]
     allon = next(x for x in b250 if not x["shed"])
-    L.append(f"- Example, {sc['label'].lower()}, 250 kWh battery: everything on lasts {n(allon['runtime_h'], 1)} h; keeping lighting only lasts {n(b250[0]['runtime_h'], 1)} h; "
+    L.append(f"- Example, {sc['label'].lower()}, 250 kWh battery: everything on lasts {n(allon['runtime_h'], 1)} h; the longest plan (keep {' + '.join(b250[0]['keep'])} only) lasts {n(b250[0]['runtime_h'], 1)} h; "
              f"keeping lighting and plug loads lasts {n(next(x for x in b250 if x['keep'] == ['lighting', 'plug'])['runtime_h'], 1)} h.\n")
     L.append(f"**Assumptions** (editable in `campus_energy_forecaster/config.py`): electricity ${a['tariff_usd_per_kwh']}/kWh ({a['tariff_source']}); "
              f"grid {a['carbon_kg_per_kwh']} kg CO2/kWh ({a['carbon_source']}); battery {n(100 * o['backup_assumptions']['usable_fraction'])}% usable, "
@@ -63,12 +70,26 @@ def block(r):
     return "\n".join(L)
 
 
+def multi_block(m):
+    L = ["**Schools and healthcare buildings (a second public dataset)**\n",
+         f"{m['method']} Data: {m['dataset']['name']}, {m['dataset']['license']}.\n",
+         "| Building type | Buildings | Median error vs last week | Buildings that beat it | 80% band held | Large faults found | Alerts per 30 days |",
+         "|---|---|---|---|---|---|---|"]
+    for g in m["groups"].values():
+        L.append(f"| {g['label']} | {g['n_buildings']} at {g['n_sites']} sites | {n(g['median_mae_gain_vs_naive_pct'])}% lower | {n(g['share_buildings_beating_naive_pct'])}% | "
+                 f"{n(g['median_band_coverage_pct'])}% | {n(g['median_recall_pct']['large'])}% | {n(g['median_flagged_events_per_30d'], 1)} |")
+    L.append("\nMedians across buildings. The method helps clearly for schools and colleges, only modestly for healthcare buildings, and fails on some individual "
+             "buildings whose use changed between the training and test year. The emergency planner needs end-use meters, which this dataset lacks, so it is not part of this check.\n")
+    return "\n".join(L)
+
+
 def main():
     r = json.loads(RESULTS_JSON.read_text())
+    m = json.loads((RESULTS_JSON.parent / "multibuilding.json").read_text())
     p = PROJ_ROOT / "README.md"
     s = p.read_text(encoding="utf-8")
     i, j = s.index(START) + len(START), s.index(END)
-    p.write_text(s[:i] + "\n" + block(r) + "\n" + s[j:], encoding="utf-8")
+    p.write_text(s[:i] + "\n" + block(r) + "\n\n" + multi_block(m) + "\n" + s[j:], encoding="utf-8")
     print("README.md updated")
 
 
