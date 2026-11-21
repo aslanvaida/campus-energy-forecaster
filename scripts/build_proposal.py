@@ -155,6 +155,8 @@ def build():
         B("<b>Peak-load management.</b> It forecasts tomorrow's demand peak (size and hour) and estimates how much moving flexible HVAC load out of those hours would cut it."),
         B("<b>Emergency power planner.</b> Choose an outage start, a battery size and the loads that must stay on: it shows backup runtime for every combination of loads kept on, "
           "with a range, so the manager knows what to switch off first."),
+        B("<b>Try it on your own data.</b> The live dashboard lets anyone upload an hourly CSV and get a quick in-browser look (typical-week baseline, flagged runs, peaks, battery runtime); "
+          "the file never leaves the browser, and the full forecasting model runs in the open-source Python code."),
         Spacer(1, 3),
         Image(figure(), width=178 * mm, height=178 * mm * 2.15 / 7.4),
         P(f"<b>Figure.</b> A: share of each load drawn after hours in 2019. B: two weeks of whole-building load (amber) against the forecast (dashed) and its 80% band. "
