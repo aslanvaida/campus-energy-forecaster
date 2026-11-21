@@ -138,7 +138,8 @@ def build():
         P("Campus Energy Forecaster", title),
         P("Cutting wasted electricity and planning for grid outages in schools, clinics and community buildings", sub),
         P("<b>Global Sustainability Challenge 2026-27</b> &middot; Theme: Sustainable Energy &middot; Focus: Usage and Efficiency; "
-          "emergency power for communities when the grid goes down &middot; Team: Aslan Shaukat Vaida, Ramith Vaid", small),
+          "emergency power for communities when the grid goes down", small),
+        P("<b>Team Terra Nexus:</b> Aslan Shaukat Vaida, Ramith Vaid, Soham Bisaria, Rohit Menon, Panav Java", small),
         Spacer(1, 3),
         P("1. The problem", h),
         P(f"Meter data is widely collected but rarely turned into decisions: it is hard to tell an unusual hour from a normal one, "
@@ -155,6 +156,8 @@ def build():
         B("<b>Peak-load management.</b> It forecasts tomorrow's demand peak (size and hour) and estimates how much moving flexible HVAC load out of those hours would cut it."),
         B("<b>Emergency power planner.</b> Choose an outage start, a battery size and the loads that must stay on: it shows backup runtime for every combination of loads kept on, "
           "with a range, so the manager knows what to switch off first."),
+        B("<b>Try it on your own data.</b> The live dashboard lets anyone upload an hourly CSV and get a quick in-browser look (typical-week baseline, flagged runs, peaks, battery runtime); "
+          "the file never leaves the browser, and the full forecasting model runs in the open-source Python code."),
         Spacer(1, 3),
         Image(figure(), width=178 * mm, height=178 * mm * 2.15 / 7.4),
         P(f"<b>Figure.</b> A: share of each load drawn after hours in 2019. B: two weeks of whole-building load (amber) against the forecast (dashed) and its 80% band. "
@@ -214,7 +217,7 @@ def build():
     ]
     OUT.parent.mkdir(parents=True, exist_ok=True)
     doc = SimpleDocTemplate(str(OUT), pagesize=A4, leftMargin=16 * mm, rightMargin=16 * mm, topMargin=13 * mm, bottomMargin=12 * mm,
-                            title="Campus Energy Forecaster: project proposal", author="Aslan Shaukat Vaida, Ramith Vaid",
+                            title="Campus Energy Forecaster: project proposal", author="Terra Nexus: Aslan Shaukat Vaida, Ramith Vaid, Soham Bisaria, Rohit Menon, Panav Java",
                             subject="Global Sustainability Challenge 2026-27, Sustainable Energy")
     doc.build(story)
     print("wrote", OUT)
