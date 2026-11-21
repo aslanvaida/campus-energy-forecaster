@@ -17,7 +17,8 @@ npm run lint
 To refresh the numbers, run the Python analysis from the repo root (see the main README), then reload.
 
 ```
-app/page.tsx                 Page header and dashboard
+app/page.tsx                 Page header with two buttons (analyze your own data / see the demo)
+components/app-shell.tsx     Sticky tab bar: demo building, and "Analyze your own data" (the upload view, linkable as #upload)
 components/dashboard.tsx     Sections (alerts, quiet hours, forecast, outage planner, trust)
 components/band-chart.tsx    SVG chart: actual load against the forecast band
 components/ui/               Card, table, badge and related primitives
